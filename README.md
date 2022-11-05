@@ -90,3 +90,91 @@ Flag: `buckeye{4n_1d_numb3r_15_N07_4_p455w0rd}`
 
 
 
+>### [crypto/powerball/easy]([https://scanbook.chall.pwnoh.io/](https://powerball.chall.pwnoh.io/))
+<img src="https://user-images.githubusercontent.com/54641137/200136159-6a5e621a-9093-4168-a8a0-b610c3ee2fc6.png" width="50%"/>  
+
+<details>
+  <h3>Method: </h3>  
+  
+  Download `powerball.zip` and read through the `app.js`.
+  Then, run `app.js` using the command `node app.js` a few times and log various variables. You would find the following facts: 
+  <code></code>
+  <ol>
+    <li>The value of multiplier stays constant. <code>multiplier = 170141183460469231731687303715884105727n</code></li>
+    <li>The value of <code>seed</code> used in the calculation of <code>nextRandomNumber()</code> is always the previous seed, <code>S<sub>n-1</sub></code>.</li>
+    <li>The next seed, <code>S<sub>n</sub></code>, is the return value of <code>nextRandomNumber()</code></li>
+    <li>The next seed, <code>S<sub>n</sub></code>, is what you need to get the winning ball for the flag.</li>
+    <li>The value of modulus stays constant when generating all the flags in a single run of <code>app.js</code>.</li>
+  </ol>
+
+  ```
+  function nextRandomNumber() {
+    console.log("multiplier - " + multiplier);
+    console.log("modulus - " + modulus);
+    console.log("seed - " + seed);
+    return (multiplier * seed) % modulus;
+  }
+  ```
+ Therefore, since multiplier and seed is known to us, the only parameter we would need to find to figure out in `nextRandomNumber()` is the value of modulus. However, this is hard as reversing modulus operations is really really difficult (trust me on this. i've tried it.).
+  
+  A random idea that came up would be to get the Greatest Common Denominator of seed<sub>n</sub> & seed<sub>n-1</sub>, which works. This came from the inspiration of:
+
+  >x % n = r, where x is the number, n is the divisor, r is the remainder.  
+  Therefore, n * q + r = x, where q is the quotient.  
+  Rewriting, x - r = n * q.  
+  Following from our fact 5 above, n should stay the same for x<sub>1</sub> & x<sub>2</sub>. 
+  Therefore, n should be a common factor of both x<sub>1</sub> & x<sub>2</sub>  
+  
+  >Checking my thought with examples:  
+  
+  >7 % n = 1         => 7 - 1 = 2 * 3  
+  8 % n = 0         => 8 - 0 = 2 * 4  
+  GCD(7 - 1, 8 - 1) = 2 and if n = 2, the above 2 statements are true.  
+  
+  >1515 % n = 3      => 1515 - 3 = 8 * 189  
+  1531 % n = 3      => 1531 - 3 = 8 * 191  
+  GCD(1515 - 3, 1531 - 3) = 8 and if n = 8, the above 2 statements are true.  
+  
+  Thus, to find the next seed, the formula would be (multiplier * prevSeed) % mod, where mod is the GCD(Seed<sub>1</sub> & Seed<sub>2</sub>). Then, i went on to testing if the GCD of Seed<sub>1</sub> & seed<sub>2</sub> would help get Seed<sub>3</sub> and it did.
+  
+  Solution:
+  ```
+  let seed0 = 101204381215958959726337149858943218784n;
+  let seed1 = 238864599652411061782172846888836024917n;
+  let seed2 = 53089622935316837292122757133819042852n;
+  
+  const gcd = (a, b) => {
+    if (!b) {
+      return a;
+    }
+    return gcd(b, a % b);
+  };
+
+  const findNext = (multiplier, prevSeed, mod) => {
+    return (multiplier * prevSeed) % mod;
+  };
+
+  const decode = (seed0, seed1, seed2) => {
+    let multiplier = 170141183460469231731687303715884105727n;
+    let mod = gcd(multiplier * seed0 - seed1, multiplier * seed1 - seed2);
+    console.log(findNext(multiplier, seed2, mod));
+  };
+  decode();
+  ```
+  
+  Note: Process of solving can be found in `decode.js`
+  
+</details>
+
+Flag: `buckeye{y3ah_m4yb3_u51nG_A_l1N34r_c0nGru3Nt1al_G3n3r4t0r_f0r_P0w3rB4lL_wA5nt_tH3_b3st_1d3A}`
+
+
+
+
+
+
+
+
+
+
+

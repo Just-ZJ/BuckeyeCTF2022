@@ -65,7 +65,7 @@ Flag: `buckeye{w41t_3v3n_l4t3x_15_un54f3}`
 
 
 >### [web/scanbook/easy](https://scanbook.chall.pwnoh.io/)
-<img src="" width="50%"/>  
+<img src="https://user-images.githubusercontent.com/54641137/200136116-053964d6-bf52-49a1-941b-4d346ad57c6e.png" width="50%"/>  
 
 <details>
   <h3>Method: Guess the QR code data</h3>  

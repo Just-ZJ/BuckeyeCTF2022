@@ -1,6 +1,6 @@
 # BuckeyeCTF2022 Writeup
 
->### web/buckeyenotes/beginner
+>### [web/buckeyenotes/beginner](https://buckeyenotes.chall.pwnoh.io/)
 <img src="https://user-images.githubusercontent.com/54641137/200134869-83061ffa-5282-4801-b006-8b0bcc3c9631.png" width="50%"/>  
   
 <details>
@@ -39,7 +39,7 @@ Flag: `buckeye{wr1t3_ur_0wn_0p3n_2_pwn}`
 
 
 
->### web/textual/beginner
+>### [web/textual/beginner](https://textual.chall.pwnoh.io/)
 <img src="https://user-images.githubusercontent.com/54641137/200134953-7bb1fa8c-00e9-4623-805f-38eed23954b7.png" width="50%"/>  
 
 <details>
@@ -55,6 +55,34 @@ Flag: `buckeye{wr1t3_ur_0wn_0p3n_2_pwn}`
 </details>
 
 Flag: `buckeye{w41t_3v3n_l4t3x_15_un54f3}`
+
+
+
+
+
+
+
+
+
+>### [web/scanbook/easy](https://scanbook.chall.pwnoh.io/)
+<img src="" width="50%"/>  
+
+<details>
+  <h3>Method: Guess the QR code data</h3>  
+  Facts: 
+  <ol>
+    <li>A unique QR code would be generated for every post generated.</li>
+    <li>Each QR code corresponds to a post.</li>
+    <li>The data in each QR code are numbers.</li>
+  </ol>
+  
+  Therefore, to get the flag from the post, you would simply have to guess what the number in the QR code is. Since the flag should logically be one of the first few posts, start guessing from the number 0. If you start from 1, it would be a huge mistake! (It took me 30minutes to realise that i missed the number 0)
+  
+  To solve the challenge, simply use a [free QR code generator](https://www.the-qrcode-generator.com/) and create a QR code for the number `0` and scan it on the webpage to get the post for the flag.
+</details>
+
+Flag: `buckeye{4n_1d_numb3r_15_N07_4_p455w0rd}`
+
 
 
 

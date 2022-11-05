@@ -137,11 +137,19 @@ Flag: `buckeye{4n_1d_numb3r_15_N07_4_p455w0rd}`
   
   Thus, to find the next seed, the formula would be (multiplier * prevSeed) % mod, where mod is the GCD(Seed<sub>1</sub> & Seed<sub>2</sub>). Then, i went on to testing if the GCD of Seed<sub>1</sub> & seed<sub>2</sub> would help get Seed<sub>3</sub> and it did.
   
-  Solution:
+  Solution: Get the first 3 flags from the website and replace seed0, seed1 and seed2 respectively in `decode()` to generate the wining ball.  
+  Note: This works 100% only for the 4th seed generated. If the 4th is missed, refresh the webpage.
   ```
-  let seed0 = 101204381215958959726337149858943218784n;
-  let seed1 = 238864599652411061782172846888836024917n;
-  let seed2 = 53089622935316837292122757133819042852n;
+  function seedToBalls(n) {
+    const balls = [];
+    //10 balls
+    for (let i = 0; i < 10; i++) {
+      balls.push(Number(n % 100n));
+      n = n / 100n;
+    }
+    console.log(balls);
+    return balls;
+  }
   
   const gcd = (a, b) => {
     if (!b) {
@@ -154,10 +162,13 @@ Flag: `buckeye{4n_1d_numb3r_15_N07_4_p455w0rd}`
     return (multiplier * prevSeed) % mod;
   };
 
-  const decode = (seed0, seed1, seed2) => {
+  const decode = () => {
+    let seed0 = 101204381215958959726337149858943218784n;
+    let seed1 = 238864599652411061782172846888836024917n;
+    let seed2 = 53089622935316837292122757133819042852n;
     let multiplier = 170141183460469231731687303715884105727n;
     let mod = gcd(multiplier * seed0 - seed1, multiplier * seed1 - seed2);
-    console.log(findNext(multiplier, seed2, mod));
+    seedToBalls(findNext(multiplier, seed2, mod));
   };
   decode();
   ```

@@ -249,8 +249,8 @@ Flag: `buckeye{y3ah_m4yb3_u51nG_A_l1N34r_c0nGru3Nt1al_G3n3r4t0r_f0r_P0w3rB4lL_wA
   :joy: admin
   :bimbo:brutus:440028476969420/222:wenis:sweaty:behind the taco bell`
   ```
-  
-  <img src="https://user-images.githubusercontent.com/54641137/200197935-c8a459d8-4003-4a53-8fd9-694bf9375b10.png" width="50%"/>
+
+  <img src="https://user-images.githubusercontent.com/54641137/200198449-7af804be-5233-455c-bd3a-9cc302e3a522.png" width="50%"/>
   
   Note: `!quiz asd\n:joy: admin\n:bimbo:brutus:440028476969420/222:wenis:sweaty:behind the taco bell` does not work! You would have to replace `\n` with a newline!
 </details>

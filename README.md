@@ -39,6 +39,7 @@ Flag: `buckeye{wr1t3_ur_0wn_0p3n_2_pwn}`
 
 
 
+
 >### [web/textual/beginner](https://textual.chall.pwnoh.io/)
 <img src="https://user-images.githubusercontent.com/54641137/200134953-7bb1fa8c-00e9-4623-805f-38eed23954b7.png" width="50%"/>  
 
@@ -184,6 +185,76 @@ Flag: `buckeye{y3ah_m4yb3_u51nG_A_l1N34r_c0nGru3Nt1al_G3n3r4t0r_f0r_P0w3rB4lL_wA
 
 
 
+
+
+>### [web/quizbot/beginner](https://discord.gg/q4qtnrKd)
+<img src="https://user-images.githubusercontent.com/54641137/200197178-e00f605b-0528-4e9c-a419-ecb8dc10ff8a.png" width="50%"/>  
+
+<details>
+  
+  ```
+  async def finish_quiz(message):
+    _, quiz_answers = message.content.split(" ", 1)
+    quiz_answers = quiz_answers.split(":")
+    if len(quiz_answers) != 7:
+        await message.author.dm_channel.send("You didn't answer all the questions :/")
+        return
+    first, last, maiden, cc, pet, teacher, parent_meeting = quiz_answers
+    await message.author.dm_channel.send(f"Thank you, {first}. We've analyzed your answers and assigned you the appropriate role!")
+    role = discord.utils.get(guild.roles, name="Ask for username and password in Discord")
+    member = guild.get_member(message.author.id)
+
+    if member:
+        await member.add_roles(role)
+  ```
+  
+  The function that you would have to take note here would be `on_raw_reaction_add`. 
+  ```
+  @client.event
+  async def on_raw_reaction_add(event):
+      emoji = event.emoji
+      user = client.get_user(event.user_id)
+      member = guild.get_member(event.user_id)
+      channel = client.get_channel(event.channel_id)
+      message = await channel.fetch_message(event.message_id)
+
+      if (
+          message.author != client.user
+          or user == client.user
+      ):
+          return
+
+      lines = message.content.split("\n")[1:]         # message content would be splitted into an array by the delimiter '\n'
+                                                      # lines would be an array starting at index 1. index 0 would be ignored
+      for line in lines:
+          try:
+              line_reaction, role_name = line.strip().split(" ", 1)           # splits line by at most 1 space
+                                                                              # line_reaction would be index 0
+                                                                              # role_name would be index 1
+          except ValueError:
+              continue
+
+          if str(emoji) == line_reaction:                                     # checks if the emoji of the reaction is the same as line_reaction
+              role = discord.utils.get(guild.roles, name=role_name)           # looks for the role with role_name in the discord server
+              if member:
+                  await member.add_roles(role)                                # adds the role of role_name
+  ```
+  
+  Therefore, our purpose is to add the `admin` role in the discord server using this chatbox, using a carefully crafted response that fits the above criteria and having that chatbox return that response through our first name.
+  
+  
+  Therefore simply input
+  `!quiz asd  
+  :joy: admin  
+  :bimbo:brutus:440028476969420/222:wenis:sweaty:behind the taco bell`
+  and add the 😂 reaction to the response from the bot
+  
+  <img src="https://user-images.githubusercontent.com/54641137/200197935-c8a459d8-4003-4a53-8fd9-694bf9375b10.png" width="50%"/>
+  
+  Note: `!quiz asd\n:joy: admin\n:bimbo:brutus:440028476969420/222:wenis:sweaty:behind the taco bell` does not work! You would have to replace `\n` with a newline!
+</details>
+
+Flag: `buckeye{5tat3l355_m0r3_L1K3_DaT3L355}`
 
 
 
